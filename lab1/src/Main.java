@@ -16,30 +16,24 @@ public class Main {
         boolean isExist = subjectsArray.stream().anyMatch(element -> element.toLowerCase().contains("zaaw"));
         System.out.println("Lista przedmiotów zawiera przedmiot z fragmentem \"zaaw\": " + isExist);
 
-        Stream<Map.Entry<String, Integer>> gradesForSubjectsWithNames = subjectsArray.stream().map(element -> {
-            return new AbstractMap.SimpleEntry<String, Integer>(element, grades[(int) Math.floor(Math.random() * grades.length)]);
-        });
-//        gradesForSubjectsWithNames.forEach(n-> System.out.println(n));
-        Random rand = new Random();
-        HashMap<String, Integer> newMap = subjectsArray.stream()
+        HashMap<String, Integer> gradesForSubjectsWithNamesMap = subjectsArray.stream()
                 .collect(Collectors.toMap(k -> k, v -> grades[(int) Math.floor(Math.random() * grades.length)], (prev, next) -> next, HashMap::new));
-        Stream sorted = newMap.entrySet().stream().sorted(HashMap.Entry.<String, Integer>comparingByValue());
-        gradesForSubjectsWithNames.sorted(HashMap.Entry.<String,Integer>comparingByValue());
-        sorted.forEach(System.out::println);
+        Stream<Map.Entry<String, Integer>> sorted = gradesForSubjectsWithNamesMap.entrySet().stream().sorted(HashMap.Entry.<String, Integer>comparingByValue());
+        Zapis_c.ZStreamu("Oceny_rosnaco", sorted);
 
-//        System.out.println("\n\n\n");
-        Stream<Object> gradesForSubjects = subjectsArray.stream().map(element -> {
-            return grades[(int) Math.floor(Math.random() * grades.length)];
-        });
-        newMap.forEach((k, v) -> {
-//            System.out.println(k.toString() + v.toString());
-        });
         HashMap<Integer, Integer> gradesRepetition = new HashMap<>();
-        gradesForSubjects.forEach(element -> {
-            if (gradesRepetition.get(element) == null) gradesRepetition.put((Integer) element, 1);
-            gradesRepetition.put((Integer) element, gradesRepetition.get(element) + 1);
+        gradesForSubjectsWithNamesMap.forEach((k, v) -> {
+            gradesRepetition.merge(v, 1, (a, b) -> a + b);
         });
-//        System.out.println(gradesRepetition);
-        Zapis_c.ZTablicy("wynik.txt", subjectsArray);
+        Stream<Map.Entry<Integer, Integer>> sortedRepetition = gradesRepetition.entrySet().stream().sorted(HashMap.Entry.<Integer, Integer>comparingByValue());
+        ArrayList<Stream<Map.Entry<String, Integer>>> streamsWithGrades = new ArrayList<>();
+
+        sortedRepetition.forEach((elem)->{
+            System.out.println(elem);
+            streamsWithGrades.add(gradesForSubjectsWithNamesMap.entrySet().stream().filter((el)-> el.getValue() == elem.getKey()));
+        });
+        streamsWithGrades.forEach(stream -> {
+            Zapis_c.ZStreamu("Oceny_rosnaco_w_zaleznosci_od_ilosci",stream);
+        });
     }
 }
