@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 public class Zapis_c {
 
     public static void ZStreamu(String filePath, Stream<Map.Entry<String,Integer>> arr) {
-        File file = new File("WynikZapisu.txt");
+        File file = new File(filePath);
         try{
             FileWriter fileWriter = new FileWriter(file,true);
             arr.forEach(elem-> {
