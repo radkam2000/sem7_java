@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 
 public class Zapis_c {
 
-    public static void ZStreamu(String filePath, Stream<Map.Entry<String,Integer>> arr) {
+    public static void ZStreamu(String filePath, Stream<Map.Entry<String,Float>> arr) {
         File file = new File(filePath);
         try{
             FileWriter fileWriter = new FileWriter(file,true);
