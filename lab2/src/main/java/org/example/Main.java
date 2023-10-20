@@ -76,7 +76,7 @@ public class Main {
 
         for (Student student : students3.students) {
             if (student.getName().equals("Marcin")) {
-                System.out.println("Wybrane dane wybranego studenta: Imie " + student.getName() + "email " + student.getEmail());
+                System.out.println("Wybrane dane wybranego studenta: Imie " + student.getName() + " email " + student.getEmail());
             }
         }
 
