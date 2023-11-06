@@ -1,10 +1,11 @@
 wymóg:
-logowanie - rejestracja (role)
+logowanie - rejestracja (role) (obsługa sesji)
 baza danych
 rozbudowany formularz
 walidacja formularza
 CRUD
 role użytkowników
+testy jednostkowe
 
 dodatek:
 front
